@@ -1,6 +1,7 @@
 package io.anserini.ltr;
 
 import com.google.common.collect.Sets;
+import io.anserini.analysis.KStemAnalyzer;
 import io.anserini.index.generator.LuceneDocumentGenerator;
 import io.anserini.ltr.feature.FeatureExtractors;
 import io.anserini.ltr.feature.OrderedSequentialPairsFeatureExtractor;
@@ -94,7 +95,7 @@ public class WebFeatureExtractor extends BaseFeatureExtractor {
 
   @Override
   protected Analyzer getAnalyzer() {
-    return new EnglishAnalyzer();
+    return new KStemAnalyzer();
   }
 
   @Override
