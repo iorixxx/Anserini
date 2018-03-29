@@ -113,7 +113,6 @@ abstract public class BaseFeatureExtractor {
     private Map<String, RerankerContext> buildRerankerContextMap() throws IOException {
         Map<String, RerankerContext> queryContextMap = new HashMap<>();
         IndexSearcher searcher = new IndexSearcher(reader);
-        searcher.setSimilarity(new ClassicSimilarity());
 
         for (String qid : qrels.getQids()) {
             // Construct the reranker context
