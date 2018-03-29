@@ -16,12 +16,14 @@
 
 package io.anserini.index;
 
+import io.anserini.analysis.KStemAnalyzer;
 import io.anserini.collection.Collection;
 import io.anserini.document.SourceDocument;
 import io.anserini.index.generator.LuceneDocumentGenerator;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.document.Document;
@@ -203,7 +205,7 @@ public final class IndexCollection {
     int numThreads = args.threads;
 
     final Directory dir = FSDirectory.open(indexPath);
-    final EnglishAnalyzer analyzer = args.keepStopwords ? new EnglishAnalyzer(CharArraySet.EMPTY_SET) : new EnglishAnalyzer();
+    final Analyzer analyzer = new KStemAnalyzer();
     final IndexWriterConfig config = new IndexWriterConfig(analyzer);
     config.setSimilarity(new BM25Similarity());
     config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
