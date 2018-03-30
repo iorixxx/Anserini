@@ -109,7 +109,7 @@ abstract public class BaseFeatureExtractor {
 
     // Build all the reranker contexts because they will be reused once per query
     private Map<String, RerankerContext> buildRerankerContextMap() throws IOException {
-        Map<String, RerankerContext> queryContextMap = new HashMap<>();
+        Map<String, RerankerContext> queryContextMap = new LinkedHashMap<>();
         IndexSearcher searcher = new IndexSearcher(reader);
 
         for (String qid : qrels.getQids()) {
@@ -191,7 +191,7 @@ abstract public class BaseFeatureExtractor {
     public void printFeatures(PrintStream out) throws IOException {
       Map<String, RerankerContext> queryContextMap = buildRerankerContextMap();
       FeatureExtractors extractors = getExtractors();
-      Bits liveDocs = MultiFields.getLiveDocs(reader);
+
       Set<String> fieldsToLoad = getFieldsToLoad();
 
       // We need to open a searcher

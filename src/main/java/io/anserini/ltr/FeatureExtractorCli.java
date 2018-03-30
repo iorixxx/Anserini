@@ -21,6 +21,7 @@ import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.SortedMap;
 
@@ -100,8 +101,8 @@ public class FeatureExtractorCli {
     }
   }
 
-  private static Map<String,String> convertTopicsFormat(Map<Integer,String> topics) {
-    HashMap<String, String> convertedTopics = new HashMap<>(topics.size());
+  private static Map<String,String> convertTopicsFormat(SortedMap<Integer,String> topics) {
+    Map<String, String> convertedTopics = new LinkedHashMap<>(topics.size());
 
     for (Map.Entry<Integer,String> entry : topics.entrySet()) {
       convertedTopics.put(String.valueOf(entry.getKey()), entry.getValue());
