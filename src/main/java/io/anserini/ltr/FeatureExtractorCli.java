@@ -2,6 +2,7 @@ package io.anserini.ltr;
 
 import io.anserini.ltr.feature.FeatureExtractors;
 import io.anserini.search.MicroblogTopicSet;
+import io.anserini.search.query.MillionQueryTopicReader;
 import io.anserini.search.query.TopicReader;
 import io.anserini.util.Qrels;
 import org.apache.logging.log4j.LogManager;
@@ -91,7 +92,16 @@ public class FeatureExtractorCli {
 
       WebFeatureExtractor extractor = new WebFeatureExtractor(reader, qrels, convertTopicsFormat(topics), extractors);
       extractor.printFeatures(out);
-    } else if (parsedArgs.collection.equals("twitter")) {
+    }
+    else if("mq".equals(parsedArgs.collection)){
+        TopicReader tr = new MillionQueryTopicReader(Paths.get(parsedArgs.topicsFile));
+      SortedMap<Integer, String> topics = tr.read();
+      LOG.debug(String.format("%d topics found", topics.size()));
+
+      WebFeatureExtractor extractor = new WebFeatureExtractor(reader, qrels, convertTopicsFormat(topics), extractors);
+      extractor.printFeatures(out);
+    }
+    else if (parsedArgs.collection.equals("twitter")) {
       Map<String,String> topics = MicroblogTopicSet.fromFile(new File(parsedArgs.topicsFile)).toMap();
       LOG.debug(String.format("%d topics found", topics.size()));
       TwitterFeatureExtractor extractor = new TwitterFeatureExtractor(reader, qrels, topics, extractors);
